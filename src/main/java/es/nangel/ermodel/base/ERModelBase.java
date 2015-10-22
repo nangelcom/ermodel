@@ -1,8 +1,7 @@
 package es.nangel.ermodel.base;
 
 import es.nangel.ermodel.model.Entity;
-
-import javax.swing.text.html.parser.Parser;
+import es.nangel.ermodel.parser.Parser;
 
 /**
  * Created by nangel on 21/10/15.
@@ -15,10 +14,10 @@ public final class ERModelBase {
             if (FIRST_TOKEN_GENERATE.equals(args[0])) {
                 String[] plugins = args[1].split(",");
                 for (String plugin : plugins) {
-                    Entity entityCreator = getInstanceWithNamespace(plugin, Entity.class);
+                    Entity entityCreator = getInstanceWithNamespace(plugin, "model", Entity.class);
                     for (String file : args[2].split(",")) {
                         String[] engine = file.split("\\.");
-                        Parser parser = getInstanceWithNamespace(engine[engine.length - 1], Parser.class);
+                        Parser parser = getInstanceWithNamespace(engine[engine.length - 1], "parser", Parser.class);
                         parser.parse(file);
                         entityCreator.process(file);
                     }
@@ -27,10 +26,10 @@ public final class ERModelBase {
         }
     }
 
-    private static <T> T getInstanceWithNamespace(String className, Class<T> tClass) throws Exception {
+    private static <T> T getInstanceWithNamespace(String className, String type, Class<T> tClass) throws Exception {
         String classNamePath = className;
         if (!className.contains(".")) {
-            classNamePath = "es.nangel.ermodel." + className + "." + classNamePath;
+            classNamePath = "es.nangel.ermodel." + type + "." + className + "." + classNamePath;
         }
         return getInstanceForClass(classNamePath, tClass);
     }
