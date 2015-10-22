@@ -14,7 +14,7 @@
             <artifactId>model</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <<dependency>
+        <dependency>
             <groupId>es.nangel.ermodel</groupId>
             <artifactId>parser</artifactId>
             <version>1.0-SNAPSHOT</version>
